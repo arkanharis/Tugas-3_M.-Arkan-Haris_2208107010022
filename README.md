@@ -6,7 +6,7 @@
 Proyek ini bertujuan untuk membangun sistem klasifikasi gambar sederhana menggunakan **Deep Learning** dengan arsitektur **Transfer Learning** (menggunakan MobileNetV2).  
 Gambar yang diklasifikasikan terdiri dari tiga kategori: **Rock**, **Paper**, dan **Scissors**.
 
-Model yang dilatih kemudian akan diintegrasikan ke dalam aplikasi backend berbasis **FastAPI**, sehingga bisa menerima gambar dan memberikan hasil prediksi secara real-time.
+Model yang dilatih kemudian akan diintegrasikan ke dalam aplikasi backend berbasis **FastAPI**, serta frontend berbasis **Streamlit**, sehingga bisa menerima gambar dan memberikan hasil prediksi secara real-time.
 
 ---
 
@@ -15,6 +15,7 @@ Model yang dilatih kemudian akan diintegrasikan ke dalam aplikasi backend berbas
 - **TensorFlow / Keras** — Untuk membangun dan melatih model klasifikasi gambar.
 - **FastAPI** — Untuk membangun backend REST API.
 - **Uvicorn** — Sebagai ASGI server untuk menjalankan FastAPI.
+- **Streamlit** — Untuk frontend berbasis web.
 - **PIL (Pillow)** — Untuk memproses gambar.
 - **NumPy** — Untuk manipulasi data numerik.
 - **scikit-learn** — Untuk evaluasi model (classification report, confusion matrix).
@@ -26,15 +27,18 @@ Model yang dilatih kemudian akan diintegrasikan ke dalam aplikasi backend berbas
 ```
 project-root/
 ├── backend/
-│   └── main.py         # Kode backend FastAPI
+│   ├── main.py           # Kode backend FastAPI
+│   └── requirements.txt  # Dependencies backend
+├── frontend/
+│   ├── main.py           # Kode frontend Streamlit
+│   └── requirements.txt  # Dependencies frontend
 ├── model/
-│   └── best_transfer.h5 # Model hasil training yang disimpan
+│   └── best_transfer.h5  # Model hasil training
 ├── dataset/
 │   ├── rock/
 │   ├── paper/
-│   └── scissor/
+│   └── scissors/
 ├── README.md
-└── requirements.txt
 ```
 
 ---
@@ -43,16 +47,28 @@ project-root/
 
 ### 1. Clone Repository
 
-git clone https://github.com/furqanx/Tugas-Pembelajaran-Mesin.git <br>
+```bash
+git clone https://github.com/furqanx/Tugas-Pembelajaran-Mesin.git
 cd Tugas-Pembelajaran-Mesin
+```
 
 ### 2. Siapkan Environment Python
 
 Disarankan menggunakan **Python 3.9–3.11**.
 
-Buat environment baru, lalu install dependencies:
+Install dependencies backend:
 
+```bash
+cd backend/
 pip install -r requirements.txt
+```
+
+Install dependencies frontend:
+
+```bash
+cd ../frontend/
+pip install -r requirements.txt
+```
 
 ### 3. Download Dataset
 
@@ -62,32 +78,32 @@ Unduh dataset Rock-Paper-Scissors dari Kaggle:
 Setelah download dan ekstrak:
 - Susun dataset ke dalam folder:
 
+```
 dataset/
-    rock/
-    paper/
-    scissor/
+├── rock/
+├── paper/
+└── scissors/
+```
 
-### 4. Jalankan Backend FastAPI
+### 4. Jalankan Aplikasi
 
-Masuk ke folder `frontend/`, lalu jalankan:
+Jalankan frontend:
 
-`streamlit run app.py`
+```bash
+cd frontend/
+streamlit run main.py
+```
 
 Streamlit akan berjalan di `http://localhost:8501/`
 
-Kemudian, masuk ke folder `backend/`, lalu jalankan:
+Lalu jalankan backend:
 
-`uvicorn main:app --host 0.0.0.0 --port 8000 --reload`
+```bash
+cd ../backend/
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
 
-Server akan berjalan di `http://localhost:8000/`.
-
-### 5. Mengerjakan Tugas Praktikum
-
-Praktikan diminta untuk:
-
-- Melengkapi beberapa bagian kode yang kosong (`TODO`) sesuai dengan instruksi di notebook dan file `main.py`.
-- Memastikan bahwa preprocessing saat inferensi **konsisten** dengan preprocessing saat training.
-- Melakukan eksperimen kecil (augmentasi, tuning hyperparameter) untuk meningkatkan performa model.
+Server akan berjalan di `http://localhost:8000/`
 
 ---
 
@@ -104,5 +120,3 @@ Praktikan diminta untuk:
 - Pastikan struktur dataset rapi dan sesuai.
 - Pastikan preprocessing konsisten antara training dan backend inference.
 - Jangan lupa untuk mengisi seluruh bagian `TODO` yang ada dalam kode.
-
----
