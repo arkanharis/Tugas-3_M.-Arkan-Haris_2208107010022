@@ -39,15 +39,13 @@ THRESHOLD = 0.6
 def preprocess_pipeline(image: Image.Image, IMG_SIZE = (224, 224)) -> np.ndarray:
     """
     Fungsi untuk melakukan preprocessing pada gambar input.
-    Praktikan diminta untuk:
-    - Melakukan resize gambar ke IMG_SIZE.
-    - Mengubah gambar menjadi array bertipe float32.
-    - Melakukan rescaling pixel dari [0,255] ke [0,1].
+    - Resize ke IMG_SIZE
+    - Konversi ke array float32
+    - Normalisasi piksel ke [0, 1]
     """
-    
-    # TODO: Lengkapi proses preprocessing di bawah ini
-    
-    return arr  # pastikan mengembalikan array hasil preprocessing
+    image = image.resize(IMG_SIZE)  # resize gambar
+    arr = np.array(image).astype(np.float32) / 255.0  # konversi ke float32 & rescale
+    return arr
 
 # endpoint untuk menerima input dan menghasilkan prediksi
 @app.post("/predict/")
